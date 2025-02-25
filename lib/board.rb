@@ -33,12 +33,34 @@ class Board
       catch_the_guess_player
     end
   end
-  def show_key
-    p @@store_key
+  def compare_the_guess_with_code
+    black = 0
+    white = 0
+    code_copy = @@store_code
+    key_copy = @@store_key
+    code_copy.each_with_index do |value, index|
+      if value == key_copy[index]
+        black += 1
+        code_copy[index] = nil
+        key_copy[index] = nil
+      end
+    end
+    key_copy.each_with_index do |value, index|
+      if value && code_copy.include?(value)
+        white += 1
+        code_copy[code_copy.index(value)] = nil
+      end
+    end
+    black.times do
+      print "⚫"
+    end
+    white.times do
+      print "⚪"
+    end
   end
 end
 
 board = Board.new
 board.make_the_code
 board.make_the_guess_player
-board.show_key
+board.compare_the_guess_with_code

@@ -8,7 +8,7 @@ Command line based mastermind game implemented in ruby
 git clone git@github.com:sufiancodes/mastermind.git
 ```
 ## Navigate to mastermind directory
-- `cd tic-tac-toe`
+- `cd mastermind`
 ## Install depnendcies
 - `bundle install`
 ## Run

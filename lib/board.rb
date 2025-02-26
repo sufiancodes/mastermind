@@ -14,7 +14,6 @@ class Board
         @@store_code.push("🟠")
       end
     end
-    p @@store_code
   end
   def catch_the_guess_player
     key = gets.chomp
@@ -33,7 +32,7 @@ class Board
       catch_the_guess_player
     end
   end
-  def compare_the_guess_with_code
+  def compare_the_guess_and_provide_feedback
     black = 0
     white = 0
     code_copy = @@store_code
@@ -52,10 +51,18 @@ class Board
       end
     end
     black.times do
-      print "⚫"
+      print "⚫\n"
+      puts " Here is Feedback"
     end
     white.times do
-      print "⚪"
+      print "⚪\n"
+      puts " Here is Feedback"
+    end
+  end
+  def render_view
+    puts "Here are the views"
+    @@store_key.each_slice(4) do |slice|
+      puts slice.join(" ")
     end
   end
 end
@@ -63,4 +70,12 @@ end
 board = Board.new
 board.make_the_code
 board.make_the_guess_player
-board.compare_the_guess_with_code
+board.compare_the_guess_and_provide_feedback
+board.render_view
+
+# def render_view
+#   puts "Here are the views"
+#   @@store_key.length.times do
+#     puts "#{@@store_key[0]} #{@@store_key[1]} #{@@store_key[2]} #{@@store_key[3]}"
+#   end
+# end

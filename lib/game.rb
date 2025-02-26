@@ -50,5 +50,4 @@ class Game < Board
   
 end
 
-game = Game.new
-game.play_game
+

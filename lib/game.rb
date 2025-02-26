@@ -21,7 +21,10 @@ class Game < Board
     render_view
   end
   def switch_role
-    
+    if @@human_player == "Mastermind"
+      make_the_guess_player
+      guess_the_player_code_computer
+    end
   end
 end
 

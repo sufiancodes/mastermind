@@ -3,9 +3,23 @@ require_relative "players"
 class Board < Player
   @@store_code = []
   @@store_key = []
-
+  @@computer_guess = []
   def make_the_code
     @@store_code.clear
+    4.times do
+      guess = rand
+      if guess <= 0.25
+        @@computer_guess.push("🔴")
+      elsif guess <= 0.5
+        @@computer_guess.push("🟢")
+      elsif guess <= 0.75
+        @@computer_guess.push("🔵")
+      else
+        @@computer_guess.push("🟠")
+      end
+    end
+  end
+  def guess_the_player_code_computer
     4.times do
       guess = rand
       if guess <= 0.25
@@ -18,9 +32,7 @@ class Board < Player
         @@store_code.push("🟠")
       end
     end
-    p @@store_code
   end
-
   def catch_the_guess_player
     valid_colors = { "red" => "🔴", "blue" => "🔵", "green" => "🟢", "yellow" => "🟠" }
     puts "Enter your guesses (red, blue, green, yellow):"

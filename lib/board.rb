@@ -1,4 +1,5 @@
-class Board
+require_relative "players"
+class Board < Player
   @@store_code = []
   @@store_key = []
   def make_the_code

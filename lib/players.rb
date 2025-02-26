@@ -1,22 +1,17 @@
 class Player
-  @@role_one = nil
-  @@role_two = nil
+  @@human_player = nil
+  @@computer = nil
+
   def welcome
-    puts "Welcome pick role Mastermind or Codebreaker"
-    @@role_one = gets.chomp
-    until @@role_one == "Codebreaker" || "Mastermind"
-      @@role_one = gets.chomp 
+    puts "Welcome! Pick a role: Mastermind or Codebreaker"
+    @@human_player = gets.chomp.capitalize
+    until ["Codebreaker", "Mastermind"].include?(@@human_player)
+      puts "Invalid role. Please pick either Mastermind or Codebreaker."
+      @@human_player = gets.chomp.capitalize
     end
   end
+
   def select_computer_role
-    if @@role_one == "Codebreaker"
-      @@role_two = "Mastermind"
-    else
-      @@role_two = "Codebreaker"
-    end
+    @@computer = @@human_player == "Codebreaker" ? "Mastermind" : "Codebreaker"
   end
 end
-
-l = Player.new
-l.welcome
-l.select_computer_role

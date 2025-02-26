@@ -1,43 +1,50 @@
 require_relative "players"
+
 class Board < Player
   @@store_code = []
   @@store_key = []
+
   def make_the_code
+    @@store_code.clear
     4.times do
-      guess = rand 
-      if guess <= 0.3
+      guess = rand
+      if guess <= 0.25
         @@store_code.push("🔴")
-      elsif guess >= 0.5 && guess < 0.8
+      elsif guess <= 0.5
         @@store_code.push("🟢")
-      elsif guess >= 0.8 && guess < 0.90
+      elsif guess <= 0.75
         @@store_code.push("🔵")
       else
         @@store_code.push("🟠")
       end
     end
+    p @@store_code
   end
+
   def catch_the_guess_player
-    key = gets.chomp
-    if key == "red"
-      @@store_key.push("🔴")
-    elsif key == "blue"
-      @@store_key.push("🔵")
-    elsif key == "green"
-      @@store_key.push("🟢")
-    else
-      @@store_key.push("🟠")
+    valid_colors = { "red" => "🔴", "blue" => "🔵", "green" => "🟢", "yellow" => "🟠" }
+    puts "Enter your guesses (red, blue, green, yellow):"
+    key = gets.chomp.downcase
+    while !valid_colors.key?(key)
+      puts "Invalid input. Please enter one of the following colors: red, blue, green, yellow."
+      key = gets.chomp.downcase
     end
+    @@store_key.push(valid_colors[key])
   end
+
   def make_the_guess_player
+    @@store_key.clear
     4.times do
       catch_the_guess_player
     end
   end
+
   def compare_the_guess_and_provide_feedback
     black = 0
     white = 0
-    code_copy = @@store_code
-    key_copy = @@store_key
+    code_copy = @@store_code.dup
+    key_copy = @@store_key.dup
+
     code_copy.each_with_index do |value, index|
       if value == key_copy[index]
         black += 1
@@ -45,38 +52,32 @@ class Board < Player
         key_copy[index] = nil
       end
     end
-    key_copy.each_with_index do |value, index|
-      if value && code_copy.include?(value)
+
+    key_copy.compact.each do |value|
+      if code_copy.include?(value)
         white += 1
         code_copy[code_copy.index(value)] = nil
       end
     end
-    black.times do
-      print "⚫\n"
-      puts " Here is Feedback"
-    end
-    white.times do
-      print "⚪\n"
-      puts " Here is Feedback"
+
+    puts "Feedback:"
+    black.times { print "⚫ " }
+    white.times { print "⚪ " }
+    puts
+
+    if black == 4
+      puts "You Win"
+      return true
+    else
+      puts "Try again."
+      return false
     end
   end
+
   def render_view
-    puts "Here are the views"
+    puts "Here is the board:"
     @@store_key.each_slice(4) do |slice|
       puts slice.join(" ")
     end
   end
 end
-
-board = Board.new
-board.make_the_code
-board.make_the_guess_player
-board.compare_the_guess_and_provide_feedback
-board.render_view
-
-# def render_view
-#   puts "Here are the views"
-#   @@store_key.length.times do
-#     puts "#{@@store_key[0]} #{@@store_key[1]} #{@@store_key[2]} #{@@store_key[3]}"
-#   end
-# end

@@ -19,15 +19,13 @@ class Game < Board
 
   def game_start
     make_the_code
-    12.times do
+    12.times do |turn|
       make_the_guess_player
       break if compare_the_guess_and_provide_feedback
-
+  
       render_view
-      @human_turns += 1
-      if @human_turns == 12
+      if turn == 11
         puts "You lost, better luck next time"
-        break
       end
     end
     render_view
@@ -36,21 +34,20 @@ class Game < Board
   def switch_role
     if @human_player == "Mastermind"
       make_the_code
-      12.times do
+      12.times do |turn|
         guess_the_player_code_computer
         break if compare_the_guess_and_provide_feedback
-
+  
         render_view
-        @computer_turns += 1
-        if @computer_turns == 12
+        if turn == 11
           puts "Computer lost"
-          break
         end
       end
     else
       game_start
     end
   end
+  
 end
 
 game = Game.new

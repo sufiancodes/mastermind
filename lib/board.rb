@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "players"
 
 class Board < Player
@@ -47,7 +49,7 @@ class Board < Player
         end
       end
     end
-    p @computer_guess
+    p(@computer_guess)
   end
 
   def get_feedback
@@ -81,12 +83,12 @@ class Board < Player
     @feedback.clear
 
     code_copy.each_with_index do |value, index|
-      if value == key_copy[index]
-        black += 1
-        code_copy[index] = nil
-        key_copy[index] = nil
-        @feedback[index] = "⚫"
-      end
+      next unless value == key_copy[index]
+
+      black += 1
+      code_copy[index] = nil
+      key_copy[index] = nil
+      @feedback[index] = "⚫"
     end
 
     key_copy.compact.each_with_index do |value, index|
@@ -98,8 +100,8 @@ class Board < Player
     end
 
     puts "Feedback:"
-    black.times { print "⚫ " }
-    white.times { print "⚪ " }
+    black.times { print("⚫ ") }
+    white.times { print("⚪ ") }
     puts
 
     if black == 4
